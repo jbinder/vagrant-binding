@@ -69,6 +69,11 @@ public class VagrantConfigurationUtilities {
 			builder.append(createPuppetProvisionerConfig(
 					vmName + "_config", puppetProvisionerConfig));
 		}
+
+        String additionalConfig = vmConfig.getAdditionalConfig();
+        if (additionalConfig != null) {
+            builder.append(additionalConfig.replace("[vmConfigName]", vmName + "_config"));
+        }
 		builder.append("end").append("\n");
 		return builder.toString();
 	}

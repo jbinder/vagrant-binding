@@ -11,7 +11,9 @@ import java.util.List;
  */
 public class VagrantVmConfig {
 
-	private List<VagrantPortForwarding> portForwardings;
+    private String additionalConfig;
+
+    private List<VagrantPortForwarding> portForwardings;
 	
 	private PuppetProvisionerConfig puppetProvisionerConfig;
 	
@@ -29,17 +31,19 @@ public class VagrantVmConfig {
 	
 	/**
 	 * Constructs a configuration.
-	 * @param name name of the VM. This can be null
-	 * @param ip the static ip of the VM. This can be null
-	 * @param hostName the host name of the VM. This can be null
-	 * @param boxName the name of the Vagrant box this VM depends on.
-	 * @param boxUrl the url of the Vagrant box this VM depends on
-	 * @param portForwardings the configuration for all port forwardings. This can be null  
-	 * @param puppetProvisionerConfig the puppet configuration for the VM. This can be null
-	 * @param guiMode true if the VM should run in gui mode. This means that VirtualBox is not running in headless mode
-	 */
-	public VagrantVmConfig(String name, String ip, String hostName, String boxName, URL boxUrl, Iterable<VagrantPortForwarding> portForwardings, PuppetProvisionerConfig puppetProvisionerConfig, boolean guiMode) {
-		this.portForwardings = new ArrayList<>();
+     * @param name name of the VM. This can be null
+     * @param ip the static ip of the VM. This can be null
+     * @param hostName the host name of the VM. This can be null
+     * @param boxName the name of the Vagrant box this VM depends on.
+     * @param boxUrl the url of the Vagrant box this VM depends on
+     * @param portForwardings the configuration for all port forwardings. This can be null
+     * @param puppetProvisionerConfig the puppet configuration for the VM. This can be null
+     * @param guiMode true if the VM should run in gui mode. This means that VirtualBox is not running in headless mode
+     * @param additionalConfig additional config lines as string, where [vmConfigName] is replaced with the according value
+     */
+	public VagrantVmConfig(String name, String ip, String hostName, String boxName, URL boxUrl, Iterable<VagrantPortForwarding> portForwardings, PuppetProvisionerConfig puppetProvisionerConfig, boolean guiMode, String additionalConfig) {
+        this.additionalConfig = additionalConfig;
+        this.portForwardings = new ArrayList<>();
 		if(portForwardings != null) {
 			for(VagrantPortForwarding portForwarding : portForwardings) {
 				this.portForwardings.add(portForwarding);
@@ -117,4 +121,8 @@ public class VagrantVmConfig {
 	public String getIp() {
 		return ip;
 	}
+
+    public String getAdditionalConfig() {
+        return additionalConfig;
+    }
 }

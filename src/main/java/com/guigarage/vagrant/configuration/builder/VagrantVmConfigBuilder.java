@@ -27,8 +27,10 @@ private List<VagrantPortForwarding> portForwardings;
 	private String hostName;
 	
 	private boolean guiMode;
-	
-	public VagrantVmConfigBuilder() {
+
+    private String additionalConfig;
+
+    public VagrantVmConfigBuilder() {
 		portForwardings = new ArrayList<>();
 	}
 	
@@ -95,11 +97,16 @@ private List<VagrantPortForwarding> portForwardings;
 		this.boxUrl = boxUrl;
 		return this;
 	}
+
+    public VagrantVmConfigBuilder withAdditionalConfig(String additionalConfig) {
+        this.additionalConfig = additionalConfig;
+        return this;
+    }
 	
 	public VagrantVmConfig build() {
 		if(boxName == null) {
 			throw new VagrantBuilderException("No boxName defined");
 		}
-		return new VagrantVmConfig(name, ip, hostName, boxName, boxUrl, portForwardings, puppetProvisionerConfig, guiMode);
+		return new VagrantVmConfig(name, ip, hostName, boxName, boxUrl, portForwardings, puppetProvisionerConfig, guiMode, additionalConfig);
 	}
 }
