@@ -1,10 +1,9 @@
 package com.guigarage.vagrant.model;
 
+import com.guigarage.vagrant.util.VagrantException;
 import org.jruby.RubyObject;
 import org.jruby.RubySymbol;
 import org.jruby.exceptions.RaiseException;
-
-import com.guigarage.vagrant.util.VagrantException;
 
 /**
  * This class gives you acces to on VM. You can manage the lifecycle of this VM and acces the VM by SSH.
@@ -189,4 +188,17 @@ public class VagrantVm {
 			throw new VagrantException(exception);
 		}
 	}
+
+    /**
+     * Exports the virtual machine as "package.box"
+     * @see <a href="http://docs.vagrantup.com/v2/cli/package.html">http://docs.vagrantup.com/v2/cli/package.html</a>
+     */
+    public void createPackage() {
+        try {
+            vagrantVm.callMethod("package");
+        } catch (RaiseException exception) {
+            throw new VagrantException(exception);
+        }
+    }
+
 }
