@@ -3,18 +3,24 @@ package com.guigarage.vagrant.configuration.builder;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.guigarage.vagrant.configuration.PuppetProvisionerConfig;
 import com.guigarage.vagrant.configuration.VagrantPortForwarding;
+import com.guigarage.vagrant.configuration.VagrantSyncFolder;
 import com.guigarage.vagrant.configuration.VagrantVmConfig;
 import com.guigarage.vagrant.configuration.builder.util.VagrantBuilderException;
 
 public class VagrantVmConfigBuilder {
 
-private List<VagrantPortForwarding> portForwardings;
+    private List<VagrantPortForwarding> portForwardings;
+
+    private List<VagrantSyncFolder> syncFolders;
 	
 	private PuppetProvisionerConfig puppetProvisionerConfig;
+
+    private String bashProvisionScript;
 	
 	private String name;
 
@@ -30,8 +36,16 @@ private List<VagrantPortForwarding> portForwardings;
 
     private String additionalConfig;
 
+    private boolean privateNetwork;
+
+    private String guest;
+
+    private List<String[]> customizeVM;
+
     public VagrantVmConfigBuilder() {
-		portForwardings = new ArrayList<>();
+		portForwardings = new ArrayList<VagrantPortForwarding>();
+        syncFolders = new ArrayList<VagrantSyncFolder>();
+        customizeVM = new ArrayList<String[]>();
 	}
 	
 	public static VagrantVmConfigBuilder create() {
@@ -47,6 +61,11 @@ private List<VagrantPortForwarding> portForwardings;
 		this.portForwardings.add(portForwarding);
 		return this;
 	}
+
+    public VagrantVmConfigBuilder withVagrantSyncFolders(VagrantSyncFolder syncFolder) {
+        this.syncFolders.add(syncFolder);
+        return this;
+    }
 	
 	public VagrantVmConfigBuilder withHostName(String hostName) {
 		this.hostName = hostName;
@@ -62,11 +81,27 @@ private List<VagrantPortForwarding> portForwardings;
 		this.name = name;
 		return this;
 	}
-	
+
+    public VagrantVmConfigBuilder withSynchHostOnlyIp(String ip) {
+        this.ip = ip;
+        return this;
+    }
+
 	public VagrantVmConfigBuilder withHostOnlyIp(String ip) {
 		this.ip = ip;
 		return this;
 	}
+
+    public VagrantVmConfigBuilder withBashProvisionScript(String bashProvisionScript) {
+        this.bashProvisionScript = bashProvisionScript;
+        return this;
+    }
+
+    public VagrantVmConfigBuilder withPrivateNetworkIp(String ip) {
+        this.ip = ip;
+        this.privateNetwork = true;
+        return this;
+    }
 	
 	public VagrantVmConfigBuilder withLucid32Box() {
 		this.boxName = "lucid32";
@@ -92,6 +127,11 @@ private List<VagrantPortForwarding> portForwardings;
 		this.boxName = boxName;
 		return this;
 	}
+
+    public VagrantVmConfigBuilder withVmGuest(String guest) {
+        this.guest = guest;
+        return this;
+    }
 	
 	public VagrantVmConfigBuilder withBoxUrl(URL boxUrl) {
 		this.boxUrl = boxUrl;
@@ -103,10 +143,16 @@ private List<VagrantPortForwarding> portForwardings;
         return this;
     }
 	
+    public VagrantVmConfigBuilder withCustomizeVirtualBoxVm(String ... params) {
+        this.customizeVM.add(params);
+        return this;
+    }
+
 	public VagrantVmConfig build() {
 		if(boxName == null) {
 			throw new VagrantBuilderException("No boxName defined");
 		}
-		return new VagrantVmConfig(name, ip, hostName, boxName, boxUrl, portForwardings, puppetProvisionerConfig, guiMode, additionalConfig);
+		return new VagrantVmConfig(name, ip, hostName, boxName, boxUrl, guest, portForwardings, syncFolders,
+                puppetProvisionerConfig, guiMode, privateNetwork, customizeVM, bashProvisionScript, additionalConfig);
 	}
 }
