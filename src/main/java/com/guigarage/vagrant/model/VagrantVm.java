@@ -52,7 +52,7 @@ public class VagrantVm {
 	 */
 	public void halt() {
 		try {
-			vagrantVm.callMethod("halt");
+			vagrantVm.callMethod("action", RubySymbol.newSymbol(vagrantVm.getRuntime(), "halt"));
 		} catch (RaiseException exception) {
 			throw new VagrantException(exception);
 		}
@@ -199,7 +199,7 @@ public class VagrantVm {
      */
     public void createPackage() {
         try {
-            vagrantVm.callMethod("package");
+            vagrantVm.callMethod("action", RubySymbol.newSymbol(vagrantVm.getRuntime(), "package"));
         } catch (RaiseException exception) {
             throw new VagrantException(exception);
         }
