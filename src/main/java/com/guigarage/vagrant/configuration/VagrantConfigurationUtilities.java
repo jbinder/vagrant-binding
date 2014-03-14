@@ -1,6 +1,5 @@
 package com.guigarage.vagrant.configuration;
 
-import java.net.URL;
 import java.util.UUID;
 
 /**
@@ -43,7 +42,7 @@ public class VagrantConfigurationUtilities {
 		}
 		builder.append(createBoxNameConfig(vmName + "_config", vmConfig.getBoxName()));
 
-		URL boxUrl = vmConfig.getBoxUrl();
+		String boxUrl = vmConfig.getBoxUrl();
 		if (boxUrl != null) {
 			builder.append(createBoxUrlConfig(vmName + "_config", boxUrl));
 		}
@@ -116,7 +115,7 @@ public class VagrantConfigurationUtilities {
 		return builder.toString();
 	}
 		
-	private static String createBoxUrlConfig(String vmConfigName, URL boxUrl) {
+	private static String createBoxUrlConfig(String vmConfigName, String boxUrl) {
 		StringBuilder builder = new StringBuilder();
 		if (boxUrl != null) {
 			builder.append(

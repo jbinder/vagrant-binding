@@ -22,7 +22,7 @@ private List<VagrantPortForwarding> portForwardings;
 	
 	private String boxName;
 	
-	private URL boxUrl;
+	private String boxUrl;
 	
 	private String hostName;
 	
@@ -70,22 +70,14 @@ private List<VagrantPortForwarding> portForwardings;
 	
 	public VagrantVmConfigBuilder withLucid32Box() {
 		this.boxName = "lucid32";
-		try {
-			this.boxUrl = new URL("http://files.vagrantup.com/lucid32.box");
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
-		return this;
+        this.boxUrl = "http://files.vagrantup.com/lucid32.box";
+        return this;
 	}
 	
 	public VagrantVmConfigBuilder withLucid64Box() {
 		this.boxName = "lucid64";
-		try {
-			this.boxUrl = new URL("http://files.vagrantup.com/lucid64.box");
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
-		return this;
+        this.boxUrl = "http://files.vagrantup.com/lucid64.box";
+        return this;
 	}
 	
 	public VagrantVmConfigBuilder withBoxName(String boxName) {
@@ -93,7 +85,7 @@ private List<VagrantPortForwarding> portForwardings;
 		return this;
 	}
 	
-	public VagrantVmConfigBuilder withBoxUrl(URL boxUrl) {
+	public VagrantVmConfigBuilder withBoxUrl(String boxUrl) {
 		this.boxUrl = boxUrl;
 		return this;
 	}

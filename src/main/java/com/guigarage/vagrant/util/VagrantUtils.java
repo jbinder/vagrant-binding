@@ -76,23 +76,15 @@ public class VagrantUtils {
 	 * Returns the default URL for the lucid32 box. The box is hosted at vagrantup.com
 	 * @return The URL for the box
 	 */
-	public URL getLucid32Url() {
-		try {
-			return new URL("http://files.vagrantup.com/lucid32.box");
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+	public String getLucid32Url() {
+        return "http://files.vagrantup.com/lucid32.box";
+    }
 	
 	/**
 	 * Returns the default URL for the lucid64 box. The box is hosted at vagrantup.com
 	 * @return The URL for the box
 	 */
-	public URL getLucid64Url() {
-		try {
-			return new URL("http://files.vagrantup.com/lucid64.box");
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+	public String getLucid64Url() {
+        return "http://files.vagrantup.com/lucid64.box";
+    }
 }

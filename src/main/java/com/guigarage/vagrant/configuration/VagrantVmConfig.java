@@ -1,6 +1,5 @@
 package com.guigarage.vagrant.configuration;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class VagrantVmConfig {
 
 	private String boxName;
 	
-	private URL boxUrl;
+	private String boxUrl;
 
 	private String hostName;
 	
@@ -41,7 +40,7 @@ public class VagrantVmConfig {
      * @param guiMode true if the VM should run in gui mode. This means that VirtualBox is not running in headless mode
      * @param additionalConfig additional config lines as string, where [vmConfigName] is replaced with the according value
      */
-	public VagrantVmConfig(String name, String ip, String hostName, String boxName, URL boxUrl, Iterable<VagrantPortForwarding> portForwardings, PuppetProvisionerConfig puppetProvisionerConfig, boolean guiMode, String additionalConfig) {
+	public VagrantVmConfig(String name, String ip, String hostName, String boxName, String boxUrl, Iterable<VagrantPortForwarding> portForwardings, PuppetProvisionerConfig puppetProvisionerConfig, boolean guiMode, String additionalConfig) {
         this.additionalConfig = additionalConfig;
         this.portForwardings = new ArrayList<>();
 		if(portForwardings != null) {
@@ -86,7 +85,7 @@ public class VagrantVmConfig {
 	 * Returns the URL of the box Vagrant will use as template for the VM. If the box with the given name is not installed on your system Vagrant will download it by using this URL.
 	 * @return the URL of the box
 	 */
-	public URL getBoxUrl() {
+	public String getBoxUrl() {
 		return boxUrl;
 	}
 	
